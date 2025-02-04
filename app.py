@@ -1,8 +1,6 @@
 # 2030 Financial AI: Investment Predictions & Sharia Compliance 🚀
 import streamlit as st
 import numpy as np
-from sklearn.linear_model import LinearRegression
-
 # 🌟 Future-proof prediction model
 def predict_returns(years: int) -> float:
     model = LinearRegression()
