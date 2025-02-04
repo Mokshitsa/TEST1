@@ -1,0 +1,34 @@
+from flask import Flask, request, jsonify
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+app = Flask(__name__)
+
+# Dummy AI Model: Predicting Investment Returns
+def predict_returns(data):
+    model = LinearRegression()
+    # Dummy data (replace with actual financial data for real predictions)
+    X = np.array([[1], [2], [3], [4], [5]])  # Time period (e.g., years)
+    y = np.array([100, 200, 300, 400, 500])  # Returns
+    model.fit(X, y)
+    return model.predict([[data]])
+
+@app.route('/predict', methods=['POST'])
+def financial_advice():
+    data = request.json
+    years = data.get('years', 1)
+    predicted_returns = predict_returns(years)
+    return jsonify({"predicted_returns": predicted_returns.tolist()})
+
+# Simple Sharia-compliance Check
+@app.route('/check_compliance', methods=['POST'])
+def check_compliance():
+    data = request.json
+    investment_type = data.get('investment_type')
+    if investment_type in ['alcohol', 'gambling']:
+        return jsonify({"compliant": False, "message": "Investment violates Sharia principles."})
+    return jsonify({"compliant": True, "message": "Investment is Sharia-compliant."})
+
+if __name__ == '__main__':
+    app.run(debug=True)
